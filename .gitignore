@@ -1,5 +1,5 @@
 #contactList
-Contacts.json
+./Contacts.json
 # Logs
 logs
 *.log
