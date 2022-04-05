@@ -1,4 +1,6 @@
-{
-    "Name": "Guilherme",
-    "Telefone": 900000000
-}{"Name":"GuilhermeA","Telefone":900000000}
+[
+    {
+        "Name": "Guilherme",
+        "Telefone": 900000000
+    }
+]
