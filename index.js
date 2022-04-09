@@ -13,9 +13,12 @@ app.get('/', function (req, res) {
     res.send(contact)
 })
 app.post('/', function (req, res){
-    console.log(req.body)
-    const contactList = JSON.stringify(req.body)
-    const contact =fs.appendFileSync('./Contacts.json',contactList, {enconding:'utf8'})
+    const contactRead = fs.readFileSync('./Contacts.json', {encoding: "utf8"})
+    const contactObj = JSON.parse(contactRead)
+
+    contactObj.push(req.body)
+    const contactAdd = JSON.stringify(contactObj)
+    fs.writeFileSync('./Contacts.json',contactAdd, {enconding:'utf8'})
     res.send('200')
 })
 
