@@ -20,17 +20,18 @@ app.post('/api/contacts/', function (req, res) { //Add contact to list
     fs.writeFileSync('./Contacts.json',contactAdd, {enconding:'utf8'})
     res.status(200).send(contactAdd)
 })
-app.get('/api/contacts/:name', function (req, res) { //Read an specific contact
+app.get('/api/contacts/:id', function (req, res) { //Read a specific contact
   const contact = require('./Contacts.json')
-  const contactInfo = contact.find( cont => cont.name === req.params.name)
+  const contactInfo = contact.find( cont => cont.name === req.params.id)
   if (contactInfo) res.status(200).send(contactInfo)
   else res.status(404).send('We could not find the contact.')
 })
-app.put('/api/contacts/:id', function (req, res) { //edit an specific contact name or number
+app.put('/api/contacts/:id', function (req, res) { //edit a specific contact name or number
   const contact = require('./Contacts.json')
-  const contactInfo = contact.find( cont => cont.id === req.params.name)
+  const contactInfo = contact.find( cont => cont.name == req.params.id)
   if(contactInfo) {
     contactInfo.name = req.body?.name || contactInfo.name
+    //contactInfo.name != req.body.name ? contactInfo.name,e = req.body.name : contactInfo.name
     contactInfo.number = req.body?.number || contactInfo.number
     const editContact = JSON.stringify(contact)
     fs.writeFileSync('./Contacts.json',editContact, {enconding:'utf8'})
@@ -38,6 +39,29 @@ app.put('/api/contacts/:id', function (req, res) { //edit an specific contact na
   }
     else res.status(404).send('We could not find the contact.')
 })
+app.patch('/api/contacts/:id', function (req, res) { //edit the number of aspecific contact
+  const contact = require('./Contacts.json')
+  const contactInfo = contact.find( cont => cont.name == req.params.id)
+  if(contactInfo) {
+    contactInfo.number = req.body?.number || contactInfo.number
+    const editContact = JSON.stringify(contact)
+    fs.writeFileSync('./Contacts.json',editContact, {enconding:'utf8'})
+    res.status(200).send(contactInfo)
+  }
+    else res.status(404).send('We could not find the contact.')
+})
+app.delete('/api/contacts/:id', (req,res) => { //delete a specific contact
+  const contact = require('./Contacts.json')
+  const contactInfo = contact.find(cont => cont.name == req.params.id)
+  if(contactInfo) {
+      const index = contact.indexOf(contactInfo)
+      contact.splice(index, 1)
+      const editContact = JSON.stringify(contact)
+      fs.writeFileSync('./Contacts.json',editContact, {enconding:'utf8'})
+      res.send(contactInfo)
+  }
+  else res.status(404).send('We could not find the contact.')
 
+})
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Listening on port ${port}...`))
