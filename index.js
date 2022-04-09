@@ -26,9 +26,9 @@ app.get('/api/contacts/:name', function (req, res) { //Read an specific contact
   if (contactInfo) res.status(200).send(contactInfo)
   else res.status(404).send('We could not find the contact.')
 })
-app.put('/api/contacts/:name', function (req, res) { //edit an specific contact name or number
+app.put('/api/contacts/:id', function (req, res) { //edit an specific contact name or number
   const contact = require('./Contacts.json')
-  const contactInfo = contact.find( cont => cont.name === req.params.name)
+  const contactInfo = contact.find( cont => cont.id === req.params.name)
   if(contactInfo) {
     contactInfo.name = req.body?.name || contactInfo.name
     contactInfo.number = req.body?.number || contactInfo.number
