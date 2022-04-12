@@ -19,6 +19,7 @@
   "homepage": "https://github.com/GuilhermeAugustoP/ContactList#readme",
   "dependencies": {
     "body-parser": "^1.19.2",
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "joi": "^17.6.0"
   }
 }
